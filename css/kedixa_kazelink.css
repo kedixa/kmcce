@@ -1,0 +1,36 @@
+#kedixa_kazelink_tag_wrapper {
+    background-color: rgba(127, 255, 212, 0.5);
+}
+#kedixa_kazelink_counter_tag {
+    z-index: 100000;
+    position: fixed;
+    right: 2%;
+    top: 30%;
+    min-width: 300px;
+    min-height: 200px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: rgba(127,255,212, 0.5);
+    padding: 10px;
+}
+.kedixa_kazelink_button_add, .kedixa_kazelink_button_sub {
+    width: 50px;
+    height: 30px;
+    margin-left: 10px;
+    border: 0;
+    border-radius: 10px;
+    font-weight: bold;
+    outline: none;
+}
+.kedixa_kazelink_button_add {
+    background-color: #f66;
+}
+.kedixa_kazelink_button_sub {
+    background-color: #6f6;
+}
+.kedixa_kazelink_container {
+    min-height: 50px;
+}
+.kedixa_kazelink_input_number {
+    width: 60px;
+}
