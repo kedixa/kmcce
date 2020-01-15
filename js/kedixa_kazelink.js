@@ -33,10 +33,55 @@ function kedixa_kazelink_set_counter_tag() {
             <label>点评：</label>\
             <input type="text" id="kedixa_kazelink_text_comment" value="牛六不开"></input><br/>\
             <label>定制弹幕模式：</label><br/>\
-            <textarea id="kedixa_kazelink_textarea" style="min-width: 280px; min-height: 100px;">胜利：%%win%%，失败：%%lose%%，喝汤：%%soup%%，点评：%%comment%%</textarea><br/>\
+            <textarea id="kedixa_kazelink_textarea" style="min-width: 200px; min-height: 100px;">胜利：%%win%%，失败：%%lose%%，喝汤：%%soup%%，点评：%%comment%%</textarea><br/>\
             <input type="button" id="kedixa_kazelink_generate_text" value="定制弹幕">\
         </form>\
     </dvi>';
+    // config kedixa_kazelink_config
+    counter_html = '<div id="kedixa_kazelink_counter_tag">\n';
+    var barrage_template = '';
+    for(var key in kedixa_kazelink_config) {
+        var item = kedixa_kazelink_config[key];
+        if(item.type === 'template') {
+            barrage_template = item.default_value;
+        }
+        else if(item.type === 'number') {
+            var input_id = 'kazelink_kedixa_' + key;
+            var html = '<form class="kedixa_kazelink_container">';
+            html += '<label>' + item.label + ': </label>';
+            html += '<input type="text" class="kedixa_kazelink_input_number" id="' +
+                input_id + '" value="' + item.default_value + '"></input>';
+            if(typeof(item.buttons) !== 'undefined') {
+                for(var i = 0; i < item.buttons.length; i++) {
+                    var btn = item.buttons[i];
+                    var btn_id = 'kedixa_kazelink_' + btn.name;
+                    var btn_html = '';
+                    if(btn.action >= 0) {
+                        btn_html += '<input type="button" class="kedixa_kazelink_button_add" id="' +
+                            btn_id + '" value="' + btn.label + '"></input>';
+                    }
+                    else {
+                        btn_html += '<input type="button" class="kedixa_kazelink_button_sub" id="' +
+                            btn_id + '" value="' + btn.label + '"></input>';
+                    }
+                    html += btn_html;
+                }
+            }
+            html += '</form>\n';
+            counter_html += html;
+        }
+        else if(item.type === 'text') {
+            //
+        }
+    }
+    counter_html += '</div>';
+    var onclick = function() {
+        var affect = item.affect;
+        var id = id;
+        return function() {
+            //
+        };
+    }();
     var K = function(id) { return document.getElementById(id); };
     var change_value = function(id, c) {
         var old_value = parseInt(K(id).value);
@@ -47,6 +92,7 @@ function kedixa_kazelink_set_counter_tag() {
     div.id="kedixa_kazelink_tag_wrapper";
     div.innerHTML = counter_html;
     document.body.appendChild(div);
+    /*
     K('kedixa_kazelink_win_add').onclick = function() { change_value('kedixa_kazelink_text_win', 1); };
     K('kedixa_kazelink_win_sub').onclick = function() { change_value('kedixa_kazelink_text_win', -1); };
     K('kedixa_kazelink_lose_add').onclick = function() { change_value('kedixa_kazelink_text_lose', 1); };
@@ -61,6 +107,7 @@ function kedixa_kazelink_set_counter_tag() {
         text = text.replace('%%comment%%', K('kedixa_kazelink_text_comment').value);
         kedixa_kazelink_set_message(text);
     };
+    */
 }
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
 {
