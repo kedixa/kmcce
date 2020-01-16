@@ -3,8 +3,9 @@
     position: fixed;
     top: 0;
     right: 0;
-    bottom: 20%;
+    bottom: 15%;
     width: 18%;
+    min-width: 250px;
 }
 #kedixa_kazelink_counter_tag {
     z-index: 100000;
@@ -15,24 +16,33 @@
     background-color: rgba(127,255,212, 0.5);
     padding: 10px;
 }
-.kedixa_kazelink_button_add, .kedixa_kazelink_button_sub {
-    width: 50px;
+.kedixa_kazelink_button_a, .kedixa_kazelink_button_b, 
+.kedixa_kazelink_button_c {
+    min-width: 40px;
     height: 30px;
     margin-left: 10px;
     border: 0;
     border-radius: 10px;
     font-weight: bold;
     outline: none;
+    cursor: pointer;
 }
-.kedixa_kazelink_button_add {
+.kedixa_kazelink_button_a {
     background-color: #f66;
 }
-.kedixa_kazelink_button_sub {
+.kedixa_kazelink_button_b {
     background-color: #6f6;
+}
+.kedixa_kazelink_button_c {
+    background-color: #1e87f0;
 }
 .kedixa_kazelink_container {
     min-height: 50px;
 }
 .kedixa_kazelink_input_number {
     width: 60px;
+}
+.kedixa_kazelink_barrage_template {
+    min-width: 200px;
+    min-height: 100px;
 }

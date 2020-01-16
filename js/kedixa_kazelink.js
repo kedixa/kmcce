@@ -9,36 +9,8 @@ function kedixa_kazelink_set_counter_tag() {
         alert('标签已存在');
         return;
     }
-    var counter_html = '\
-    <div id="kedixa_kazelink_counter_tag">\
-        <form class="kedixa_kazelink_container">\
-            <label>胜场：</label>\
-            <input type="text" class="kedixa_kazelink_input_number" id="kedixa_kazelink_text_win" value="0"></input>\
-            <input type="button" class="kedixa_kazelink_button_add" id="kedixa_kazelink_win_add" value="+1">\
-            <input type="button" class="kedixa_kazelink_button_sub" id="kedixa_kazelink_win_sub" value="-1">\
-        </form>\
-        <form class="kedixa_kazelink_container">\
-            <label>败场：</label>\
-            <input type="text" class="kedixa_kazelink_input_number" id="kedixa_kazelink_text_lose" value="0"></input>\
-            <input type="button" class="kedixa_kazelink_button_add" id="kedixa_kazelink_lose_add" value="+1">\
-            <input type="button" class="kedixa_kazelink_button_sub" id="kedixa_kazelink_lose_sub" value="-1">\
-        </form>\
-        <form class="kedixa_kazelink_container">\
-            <label>喝汤：</label>\
-            <input type="text" class="kedixa_kazelink_input_number" id="kedixa_kazelink_text_soup" value="0"></input>\
-            <input type="button" class="kedixa_kazelink_button_add" id="kedixa_kazelink_soup_add" value="+1">\
-            <input type="button" class="kedixa_kazelink_button_sub" id="kedixa_kazelink_soup_sub" value="-1">\
-        </form>\
-        <form class="kedixa_kazelink_container">\
-            <label>点评：</label>\
-            <input type="text" id="kedixa_kazelink_text_comment" value="牛六不开"></input><br/>\
-            <label>定制弹幕模式：</label><br/>\
-            <textarea id="kedixa_kazelink_textarea" style="min-width: 200px; min-height: 100px;">胜利：%%win%%，失败：%%lose%%，喝汤：%%soup%%，点评：%%comment%%</textarea><br/>\
-            <input type="button" id="kedixa_kazelink_generate_text" value="定制弹幕">\
-        </form>\
-    </dvi>';
     // config kedixa_kazelink_config
-    counter_html = '<div id="kedixa_kazelink_counter_tag">\n';
+    var counter_html = '<div id="kedixa_kazelink_counter_tag">\n';
     var barrage_template = '';
     for(var key in kedixa_kazelink_config) {
         var item = kedixa_kazelink_config[key];
@@ -46,7 +18,7 @@ function kedixa_kazelink_set_counter_tag() {
             barrage_template = item.default_value;
         }
         else if(item.type === 'number') {
-            var input_id = 'kazelink_kedixa_' + key;
+            var input_id = 'kedixa_kazelink_' + key;
             var html = '<form class="kedixa_kazelink_container">';
             html += '<label>' + item.label + ': </label>';
             html += '<input type="text" class="kedixa_kazelink_input_number" id="' +
@@ -57,11 +29,11 @@ function kedixa_kazelink_set_counter_tag() {
                     var btn_id = 'kedixa_kazelink_' + btn.name;
                     var btn_html = '';
                     if(btn.action >= 0) {
-                        btn_html += '<input type="button" class="kedixa_kazelink_button_add" id="' +
+                        btn_html += '<input type="button" class="kedixa_kazelink_button_a" id="' +
                             btn_id + '" value="' + btn.label + '"></input>';
                     }
                     else {
-                        btn_html += '<input type="button" class="kedixa_kazelink_button_sub" id="' +
+                        btn_html += '<input type="button" class="kedixa_kazelink_button_b" id="' +
                             btn_id + '" value="' + btn.label + '"></input>';
                     }
                     html += btn_html;
@@ -71,43 +43,96 @@ function kedixa_kazelink_set_counter_tag() {
             counter_html += html;
         }
         else if(item.type === 'text') {
-            //
+            var input_id = 'kedixa_kazelink_' + key;
+            var html = '<form class="kedixa_kazelink_container">\n';
+            html += '<label>' + item.label + ':</label>\n';
+            html += '<input type="text" id="' + input_id + '"</input><br/>';
+            html += '</form>';
+            counter_html += html;
         }
     }
+    var template_form = '<form class="kedixa_kazelink_container">\
+        <label>弹幕模板:</label><br/>\
+        <textarea id="kedixa_kazelink_barrage_template" class="kedixa_kazelink_barrage_template">' +
+        barrage_template + '</textarea><br/>\
+        <input type="button" id="kedixa_kazelink_generate_text" class="kedixa_kazelink_button_c" value="定制弹幕">\
+        <input type="button" id="kedixa_kazelink_send_barrage" class="kedixa_kazelink_button_c" value="直接发送"><br/>\
+        </form>';
+    counter_html += template_form;
     counter_html += '</div>';
-    var onclick = function() {
-        var affect = item.affect;
-        var id = id;
-        return function() {
-            //
-        };
-    }();
-    var K = function(id) { return document.getElementById(id); };
-    var change_value = function(id, c) {
-        var old_value = parseInt(K(id).value);
-        var new_value = old_value + c;
-        if(new_value >= 0) K(id).value = old_value + c;
-    };
     var div = document.createElement("div");
     div.id="kedixa_kazelink_tag_wrapper";
     div.innerHTML = counter_html;
     document.body.appendChild(div);
-    /*
-    K('kedixa_kazelink_win_add').onclick = function() { change_value('kedixa_kazelink_text_win', 1); };
-    K('kedixa_kazelink_win_sub').onclick = function() { change_value('kedixa_kazelink_text_win', -1); };
-    K('kedixa_kazelink_lose_add').onclick = function() { change_value('kedixa_kazelink_text_lose', 1); };
-    K('kedixa_kazelink_lose_sub').onclick = function() { change_value('kedixa_kazelink_text_lose', -1); };
-    K('kedixa_kazelink_soup_add').onclick = function() { change_value('kedixa_kazelink_text_soup', 1); change_value('kedixa_kazelink_text_lose', 1); };
-    K('kedixa_kazelink_soup_sub').onclick = function() { change_value('kedixa_kazelink_text_soup', -1); change_value('kedixa_kazelink_text_lose', -1); };
+    // generate click action
+    var K = function(id) { return document.getElementById(id); };
+    var change_number = function(id, c) {
+        var old_value = parseInt(K(id).value);
+        var new_value = old_value + c;
+        K(id).value = new_value;
+        var dict = {};
+        dict[id] = new_value;
+        chrome.storage.local.set(dict, function(){});
+    };
+    for(var key in kedixa_kazelink_config) {
+        var item = kedixa_kazelink_config[key];
+        if(item.type === 'number') {
+            var input_id = 'kedixa_kazelink_' + key;
+            var dict = {};
+            dict[input_id] = item.default_value;
+            chrome.storage.local.get(dict, function() {
+                var local_input_id = input_id;
+                return function(result) {
+                    K(local_input_id).value = result[local_input_id];
+                };
+            }());
+            if(typeof(item.buttons) !== 'undefined') {
+                for(var i = 0; i < item.buttons.length; i++) {
+                    var btn = item.buttons[i];
+                    var btn_id = 'kedixa_kazelink_' + btn.name;
+                    K(btn_id).onclick = function() {
+                        var local_input_id = input_id;
+                        var local_btn = btn;
+                        return function() {
+                            change_number(local_input_id, local_btn.action);
+                            if(typeof(local_btn.affect) !== 'undefined') {
+                                for(var i = 0; i < local_btn.affect.length; i++) {
+                                    var affect_id = 'kedixa_kazelink_' + local_btn.affect[i];
+                                    document.getElementById(affect_id).click();
+                                }
+                            }
+                        };
+                    }();
+                }
+            }
+        }
+        else if(item.type === 'text') {
+            var input_id = 'kedixa_kazelink_' + key;
+            var dict = {};
+            dict[input_id] = item.default_value;
+            chrome.storage.local.get(dict, function() {
+                var local_input_id = input_id;
+                return function(result) {
+                    K(local_input_id).value = result[local_input_id];
+                };
+            }());
+        }
+    }
     K('kedixa_kazelink_generate_text').onclick = function() {
-        var text = K('kedixa_kazelink_textarea').value;
-        text = text.replace('%%win%%', K('kedixa_kazelink_text_win').value);
-        text = text.replace('%%lose%%', K('kedixa_kazelink_text_lose').value);
-        text = text.replace('%%soup%%', K('kedixa_kazelink_text_soup').value);
-        text = text.replace('%%comment%%', K('kedixa_kazelink_text_comment').value);
+        var text = K('kedixa_kazelink_barrage_template').value;
+        for(var key in kedixa_kazelink_config) {
+            var item = kedixa_kazelink_config[key];
+            if(item.type === 'number' || item.type === 'text') {
+                var input_id = 'kedixa_kazelink_' + key;
+                text = text.replace('{' + key + '}', K(input_id).value);
+            }
+        }
         kedixa_kazelink_set_message(text);
     };
-    */
+    K('kedixa_kazelink_send_barrage').onclick = function () {
+        K('kedixa_kazelink_generate_text').click();
+        document.getElementsByClassName('ChatSend-button')[0].click();
+    };
 }
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
 {
@@ -118,6 +143,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
         var div = document.getElementById('kedixa_kazelink_tag_wrapper');
         if(div)
             document.body.removeChild(div);
+        for(var key in kedixa_kazelink_config) {
+            var item = kedixa_kazelink_config[key];
+            var input_id = 'kedixa_kazelink_' + key;
+            chrome.storage.local.remove(input_id, function(){});
+        }
         kedixa_kazelink_set_counter_tag();
     }
     else if(request == 'kedixa_kazelink_remove_counter_tag') {
@@ -128,4 +158,5 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
     else {
         alert('unknown request ' + request);
     }
+    return true;
 });

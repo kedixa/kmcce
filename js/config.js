@@ -73,18 +73,35 @@ var kedixa_kazelink_config = {
             }
         ]
     },
-    "disconnect": {
+    "drop": {
         "label": "掉线",
         "type": "number",
         "default_value": 0,
         "buttons": [
             {
-                "name": "disconnect_add",
+                "name": "drop_add",
                 "label": "+1",
                 "action": 1
             },
             {
-                "name": "disconnect_sub",
+                "name": "drop_sub",
+                "label": "-1",
+                "action": -1
+            }
+        ]
+    },
+    "draw": {
+        "label": "平局",
+        "type": "number",
+        "default_value": 0,
+        "buttons": [
+            {
+                "name": "draw_add",
+                "label": "+1",
+                "action": 1
+            },
+            {
+                "name": "draw_sub",
                 "label": "-1",
                 "action": -1
             }
@@ -97,6 +114,6 @@ var kedixa_kazelink_config = {
     },
     "template": {
         "type": "template",
-        "default_value": "默认弹幕"
+        "default_value": "胜{win}败{lose}平{draw}积德{kind}喝汤{soup}掉线{drop}点评:{comment}"
     }
 };
