@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "KazeLink Mario Counter",
-    "version": "0.1",
+    "version": "1.0",
     "description": "斗鱼KazeLink马里奥制造2多人模式计数器",
     "icons": {
         "16": "img/kazelink16.png",
